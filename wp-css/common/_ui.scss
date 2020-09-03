@@ -1,0 +1,102 @@
+
+@import './_rem.scss';
+@import './_base.scss';
+$pcWidth: 600px;
+
+body.modal-static {
+    position: fixed;
+    // position: absolute;
+    width: 100%;
+}
+*{
+    -webkit-appearance: none;
+}
+.mask{
+    background-color: rgba(0, 0, 0, 0.4);
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 99;
+    display: none;
+}
+.loading{
+    position: fixed;
+    @include bg-h5-img-contain('kjliveH5/JulyActivity/loading.gif');
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 40px/$ppr;
+    height: 40px/$ppr;
+    @media only screen and (min-width: $pcWidth) {
+        width: 40px;
+        height: 40px;
+    } 
+    z-index: 1000;
+}
+
+.notice-mask{
+    display: flex;
+    justify-content: center;
+    position: relative;
+    z-index: 1100;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+botton{
+    outline: none;
+    border: 0;
+}
+.notice,.ask-question-mask{
+    position: fixed;
+	background:rgba(0,0,0,0.6);
+	top:50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    border-radius: 5px;
+	text-align: center;
+    font-size: 15px/$ppr;
+    line-height: 0.4rem;
+    padding: 10px/$ppr 12px/$ppr;
+    font-size: 15px/$ppr;
+    line-height: 22px/$ppr;
+    max-width: 7rem;
+    @media only screen and (min-width: $pcWidth) {
+        padding: 8px 19px;
+        font-size: 14px;
+        line-height: 22px;
+        max-width: none;
+    } 
+	color:#fff;
+}
+
+.fadeIn{
+    animation:fadeIn .3s forwards 1;
+}
+
+.fadeOut{
+    animation:fadeOut .3s forwards 1;
+}
+
+/* 可以设置不同的进入和离开动画 */
+/* 设置持续时间和动画函数 */
+@keyframes fadeIn{
+    0%{
+        opacity: 0; 
+    }
+    100%{
+        opacity: 1; 
+    }
+}
+@keyframes fadeOut{
+    0%{
+        opacity: 1; 
+    }
+    100%{
+        opacity: 0; 
+    }
+}

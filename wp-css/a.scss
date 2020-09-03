@@ -1,0 +1,11 @@
+@import './common/_base.scss';
+@import './common/_rem.scss';
+
+html,body{
+    display: flex;
+    background: #000;
+    color: #fff;
+}
+.activity-item{
+    padding: 20px/$ppr;
+}

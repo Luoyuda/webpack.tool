@@ -1,0 +1,204 @@
+html.borderbox *, html.borderbox *:before, html.borderbox *:after {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+*{
+  -webkit-overflow-scrolling: touch;
+}
+body, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, textarea, p, blockquote, th, td, hr, button, article, aside, details, figcaption, figure, footer, header, menu, nav, section {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@mixin font-bold {
+  font-family: "PingFang SC",-apple-system, "Helvetica Neue", Helvetica, "Nimbus Sans L", Arial, "Liberation Sans", "Hiragino Sans GB", "Source Han Sans CN", "Source Han Sans SC", "Microsoft YaHei", "Wenquanyi Micro Hei", "WenQuanYi Zen Hei", "ST Heiti", SimHei, "WenQuanYi Zen Hei Sharp", sans-serif;
+  font-weight: bold;
+}
+
+@mixin font-normal {
+  font-family: "PingFang SC",-apple-system, "Helvetica Neue", Helvetica, "Nimbus Sans L", Arial, "Liberation Sans", "Hiragino Sans GB", "Source Han Sans CN", "Source Han Sans SC", "Microsoft YaHei", "Wenquanyi Micro Hei", "WenQuanYi Zen Hei", "ST Heiti", SimHei, "WenQuanYi Zen Hei Sharp", sans-serif;
+}
+
+@mixin font-dpr($font-size) {
+  font-size: $font-size;
+
+  [data-dpr="2"] & {
+    font-size: $font-size * 2;
+
+    @media all and (-webkit-device-pixel-ratio: 2) and (min-width: 1080px) {
+      font-size: $font-size * 4;
+    }
+    @media all and (-webkit-device-pixel-ratio: 2) and (max-width: 640px) {
+      font-size: $font-size * 1.8;
+    }
+  }
+
+  [data-dpr="3"] & {
+    font-size: $font-size * 3;
+    @media all and (-webkit-device-pixel-ratio: 3) and (min-width: 1620px) {
+      font-size: $font-size * 6;
+    }
+  }
+  @media all and (-webkit-device-pixel-ratio: 1) and (min-width: 540px) {
+    font-size: $font-size * 2;
+  }
+}
+
+@mixin border-radius($radius: 1px) {
+  -webkit-border-radius: $radius;
+  -moz-border-radius: $radius;
+  border-radius: $radius;
+}
+
+
+@mixin border-1px($color, $borderRadius, $px:1px, $tpx:null, $rpx:null, $bpx:null, $lpx:null){
+  position: relative;
+  border: none;
+  &:after{
+      content:" ";
+      position:absolute;
+      top: 0;
+      left: 0;
+      width: 200%;
+      height: 200%;
+      transform: scale(0.5);
+      transform-origin: left top;
+      box-sizing: border-box;
+      border: $px solid $color;
+      @if tpx { border-top-width: $tpx };
+      @if rpx { border-right-width: $rpx };
+      @if bpx { border-bottom-width: $bpx };
+      @if lpx { border-left-width: $lpx };
+      transition: border-color .2s;
+      border-radius: $borderRadius;
+  }
+}
+
+@mixin bg-img($name){
+  background: url('https://res.cdn.pikapika.live/kjliveH5/' + $name) no-repeat center center;
+  // background: url('/img/' + $name) no-repeat center center;
+}
+
+@mixin bg-h5-img($name){
+  background: url('https://res.cdn.pikapika.live/' + $name) no-repeat center center;
+  // background: url('/img/' + $name) no-repeat center center;
+}
+
+@mixin bg-h5-img-contain($name){
+  background: url('https://res.cdn.pikapika.live/' + $name) no-repeat center center;
+  // background: url('/img/' + $name) no-repeat center center;
+  background-size: contain;
+}
+@mixin background-img($name){
+  background: url('https://res.cdn.pikapika.live/' + $name) no-repeat;
+  background-size: 100% 100%;
+}
+
+@mixin display-flex-center{
+  display: -webkit-flex; /* Safari */
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin box-sizing-border{
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+
+html,body{
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+.clear-float-fix:after {
+	display: block;
+	content: '\200B';
+	height: 0;
+	clear: both;
+}
+li {
+  list-style: none;
+}
+
+@mixin thinBorder($directionMaps: bottom, $color: #ccc, $radius:(0, 0, 0, 0), $position: after) {
+  // 是否只有一个方向
+  $isOnlyOneDir: string==type-of($directionMaps);
+
+  @if ($isOnlyOneDir) {
+      $directionMaps: ($directionMaps);
+  }
+
+  @each $directionMap in $directionMaps {
+      border-#{$directionMap}: 1px solid $color;
+  }
+
+  // 判断圆角是list还是number
+  @if(list==type-of($radius)) {
+      border-radius: nth($radius, 1) nth($radius, 2) nth($radius, 3) nth($radius, 4);
+  }
+
+  @else {
+      border-radius: $radius;
+  }
+
+  @media only screen and (-webkit-min-device-pixel-ratio: 2) {
+      & {
+          position: relative;
+          // 删除1像素密度比下的边框
+          @each $directionMap in $directionMaps {
+              border-#{$directionMap}: none;
+          }
+      }
+
+      &:#{$position} {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: 0;
+          display: block;
+          width: 200%;
+          height: 200%;
+          transform: scale(0.5);
+          box-sizing: border-box;
+          padding: 1px;
+          transform-origin: 0 0;
+          pointer-events: none;
+          border: 0 solid $color;
+
+          @each $directionMap in $directionMaps {
+              border-#{$directionMap}-width: 1px;
+          }
+
+          // 判断圆角是list还是number
+          @if(list==type-of($radius)) {
+              border-radius: nth($radius, 1)*2 nth($radius, 2)*2 nth($radius, 3)*2 nth($radius, 4)*2;
+          }
+
+          @else {
+              border-radius: $radius*2;
+          }
+
+      }
+  }
+
+  @media only screen and (-webkit-min-device-pixel-ratio: 3) {
+      &:#{$position} {
+
+          // 判断圆角是list还是number
+          @if(list==type-of($radius)) {
+              border-radius: nth($radius, 1)*3 nth($radius, 2)*3 nth($radius, 3)*3 nth($radius, 4)*3;
+          }
+
+          @else {
+              border-radius: $radius*3;
+          }
+
+          width: 300%;
+          height: 300%;
+          transform: scale(0.33);
+      }
+  }
+}

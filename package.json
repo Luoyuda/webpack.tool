@@ -1,0 +1,48 @@
+{
+  "name": "webpack.tool",
+  "version": "1.0.0",
+  "description": "自动打包工具",
+  "main": "index.js",
+  "scripts": {
+    "build:js": "webpack --config build/webpack.prod.es.js",
+    "build:all:js": "cross-env change='all' npm run build:js",
+    "build:css": "webpack --config build/webpack.prod.css.js",
+    "build:all:css": "cross-env change='all' npm run build:css",
+    "build:all": "cross-env change='all' npm run build:css & cross-env change='all' npm run build:js",
+    "watch": "onchange --await-write-finish 500 -i \"**/*.js\" \"**/*.scss\" -e './js/**/*.js' './css/**/*.scss' -- cross-env change='{{changed}}' node scripts/change.js",
+    "watch:js": "onchange --await-write-finish 500 -i \"**/*.js\" -e './js/**/*.js' -- cross-env change='{{changed}}' node scripts/change.js",
+    "watch:css": "onchange --await-write-finish 500 -i \"**/*.scss\" -e './css/**/*.scss' -- cross-env change='{{changed}}' node scripts/change.js",
+    "postbuild:css": "rm -rf css/.empty.index.js & rm -rf css/.map/.empty.index.js.map"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.10.5",
+    "@babel/core": "^7.11.4",
+    "@babel/preset-env": "^7.11.0",
+    "autoprefixer": "^9.8.6",
+    "babel-loader": "^8.1.0",
+    "chalk": "^4.1.0",
+    "core-js": "^3.6.5",
+    "css-loader": "^4.2.2",
+    "mini-css-extract-plugin": "^0.11.0",
+    "node-sass": "^4.14.1",
+    "onchange": "^7.0.2",
+    "postcss-loader": "^3.0.0",
+    "sass": "^1.26.10",
+    "sass-loader": "^10.0.1",
+    "shelljs": "^0.8.4",
+    "webpack": "^4.44.1",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Luoyuda/webpack.tool.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Luoyuda/webpack.tool/issues"
+  },
+  "homepage": "https://github.com/Luoyuda/webpack.tool#readme"
+}
